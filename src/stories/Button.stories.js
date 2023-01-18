@@ -1,52 +1,69 @@
-import MyButton from './../components/Button.vue';
+import Button from './../components/Button.vue';
+import icons from "../assets/icons";
 
-// More on default export: https://storybook.js.org/docs/vue/writing-stories/introduction#default-export
 export default {
-  title: 'Example/Button',
-  component: MyButton,
-  // More on argTypes: https://storybook.js.org/docs/vue/api/argtypes
+  title: 'Components/Button',
+  component: Button,
   argTypes: {
-    backgroundColor: { control: 'color' },
     onClick: {},
+    type: {
+      control: { type: 'select' },
+      options: ['primary', 'secondary', 'primary-outline', 'secondary-outline'],
+    },
     size: {
       control: { type: 'select' },
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg', 'full'],
+    },
+    icon: {
+      control: { type: 'select' },
+      options: Object.entries(icons).map(([key]) => key)
     },
   },
 };
 
-// More on component templates: https://storybook.js.org/docs/vue/writing-stories/introduction#using-args
 const Template = (args) => ({
-  // Components used in your story `template` are defined in the `components` object
-  components: { MyButton },
-  // The story's `args` need to be mapped into the template through the `setup()` method
+  components: { Button },
   setup() {
     return { args };
   },
-  // And then the `args` are bound to your component with `v-bind="args"`
-  template: '<my-button v-bind="args" />',
+  template: '<Button v-bind="args"> {{ args.text || "Action"}} </Button>',
 });
 
-export const Primary = Template.bind({});
-// More on args: https://storybook.js.org/docs/vue/writing-stories/args
-Primary.args = {
-  primary: true,
-  label: 'Button',
+export const Solid = Template.bind({});
+Solid.args = {
+  type: 'primary',
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  label: 'Button',
-};
-
-export const Large = Template.bind({});
-Large.args = {
-  size: 'large',
-  label: 'Button',
+export const Outline = Template.bind({});
+Outline.args = {
+  type: 'primary-outline',
 };
 
 export const Small = Template.bind({});
 Small.args = {
-  size: 'small',
-  label: 'Button',
+  size: 'sm',
 };
+
+export const Large = Template.bind({});
+Large.args = {
+  size: 'lg',
+};
+
+export const Full = Template.bind({});
+Full.args = {
+  size: 'full',
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
+  text: "Loading"
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  isDisabled: true,
+};
+
+
+
